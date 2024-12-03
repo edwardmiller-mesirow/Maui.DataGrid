@@ -18,7 +18,7 @@
     <NoWarn>$(NoWarn);CA2007;CS1591;NU1605;SA1101;SA1124;SA1309;SA1600;SA1633</NoWarn>
 
     <Configurations>Debug;Release;Test</Configurations>
-    <MauiVersion>9.0.10</MauiVersion>
+    <MauiVersion>9.0.12</MauiVersion>
 
     <!-- Generate the lock file -->
     <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
