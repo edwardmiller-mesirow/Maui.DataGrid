@@ -12,6 +12,7 @@ internal sealed class MainViewModel : ViewModelBase
 {
     public MainViewModel()
     {
+        // To play with more data use DummyDataProvider.GetTeams(100)
         Teams = DummyDataProvider.GetTeams().ToObservableCollection();
         TeamColumnVisible = true;
         WonColumnVisible = true;
