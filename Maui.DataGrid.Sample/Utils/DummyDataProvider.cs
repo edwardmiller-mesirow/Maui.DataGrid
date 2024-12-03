@@ -7,15 +7,13 @@ using Maui.DataGrid.Sample.Models;
 
 internal static class DummyDataProvider
 {
-    private static List<Team>? _realTeams;
+    private static readonly List<Team> RealTeams = LoadTeamsFromResource();
 
     public static List<Team> GetTeams(int numberOfCopies = 1)
     {
-        _realTeams ??= LoadTeamsFromResource();
-
         if (numberOfCopies == 1)
         {
-            return _realTeams;
+            return RealTeams;
         }
 
         return GenerateRandomTeams(numberOfCopies);
@@ -37,11 +35,11 @@ internal static class DummyDataProvider
 
     private static List<Team> GenerateRandomTeams(int numberOfCopies)
     {
-        var teams = new List<Team>(_realTeams);
+        var teams = new List<Team>(RealTeams);
 
         for (var i = 0; i < numberOfCopies; i++)
         {
-            foreach (var realTeam in _realTeams)
+            foreach (var realTeam in RealTeams)
             {
                 var randomTeam = new Team
                 {
