@@ -11,25 +11,32 @@ internal static class DummyDataProvider
 
     public static List<Team> GetTeams(int numberOfCopies = 1)
     {
-        if (_realTeams == null)
-        {
-            var assembly = typeof(DummyDataProvider).GetTypeInfo().Assembly;
-
-            using var stream = assembly.GetManifestResourceStream("Maui.DataGrid.Sample.teams.json")
-                ?? throw new FileNotFoundException("Could not load teams.json");
-
-            using var reader = new StreamReader(stream);
-            var json = reader.ReadToEnd();
-
-            _realTeams = JsonSerializer.Deserialize<List<Team>>(json)
-                ?? throw new InvalidOperationException("Could not deserialize teams.json");
-        }
+        _realTeams ??= LoadTeamsFromResource();
 
         if (numberOfCopies == 1)
         {
             return _realTeams;
         }
 
+        return GenerateRandomTeams(numberOfCopies);
+    }
+
+    private static List<Team> LoadTeamsFromResource()
+    {
+        var assembly = typeof(DummyDataProvider).GetTypeInfo().Assembly;
+
+        using var stream = assembly.GetManifestResourceStream("Maui.DataGrid.Sample.teams.json")
+            ?? throw new FileNotFoundException("Could not load teams.json");
+
+        using var reader = new StreamReader(stream);
+        var json = reader.ReadToEnd();
+
+        return JsonSerializer.Deserialize<List<Team>>(json)
+            ?? throw new InvalidOperationException("Could not deserialize teams.json");
+    }
+
+    private static List<Team> GenerateRandomTeams(int numberOfCopies)
+    {
         var teams = new List<Team>(_realTeams);
 
         for (var i = 0; i < numberOfCopies; i++)
